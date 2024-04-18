@@ -1,0 +1,3 @@
+INNSERT INTO Roles (code ,value) VALUES('R1','Amin');
+INNSERT INTO Roles (code ,value) VALUES('R2','Mc derator');
+INNSERT INTO Roles (code ,value) VALUES('R2','User');
