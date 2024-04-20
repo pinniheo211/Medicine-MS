@@ -80,3 +80,46 @@ export const createNewProduct = (body, fileData) =>
       if (fileData) cloudinary.uploader.destroy(fileData.filename);
     }
   });
+
+//UPDATE
+
+export const updateProduct = ([pid, ...body], fileData) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      if (fileData) body.imge = fileData?.path;
+      const response = await db.Product.update(body, {
+        where: { id: pid },
+      });
+      resolve({
+        err: response[0] > 0 ? 0 : 1,
+        mes:
+          response[0] > 0
+            ? `${response[0]} product updated`
+            : "Cannot Update Product/ Product Not Found",
+      });
+      if (fileData && response[0] === 0)
+        cloudinary.uploader.destroy(fileData.filename);
+    } catch (error) {
+      reject(error);
+      if (fileData) cloudinary.uploader.destroy(fileData.filename);
+    }
+  });
+
+//DELETE
+export const deleteProduct = (pids) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const response = await db.Product.destroy({
+        where: { id: pids },
+      });
+      resolve({
+        err: response > 0 ? 0 : 1,
+        mes:
+          response > 0
+            ? `${response} product deleted`
+            : "Cannot Delete Product/ Product Not Found",
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });

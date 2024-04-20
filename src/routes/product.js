@@ -11,5 +11,7 @@ router.get("/", controllers.getProduct);
 //PRIVAE ROUTES
 router.use(verifyToken);
 router.post("/", uploadCloud.single("image"), controllers.createProduct);
+router.put("/", uploadCloud.single("image"), controllers.updateProduct);
+router.delete("/", controllers.deleteProduct);
 
 module.exports = router;
