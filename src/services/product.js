@@ -67,6 +67,7 @@ export const createNewProduct = (body, fileData) =>
           ...body,
           id: generateId(),
           image: fileData?.path,
+          filename: fileData?.filename,
         },
       });
       resolve({
@@ -83,7 +84,7 @@ export const createNewProduct = (body, fileData) =>
 
 //UPDATE
 
-export const updateProduct = ([pid, ...body], fileData) =>
+export const updateProduct = ({ pid, ...body }, fileData) =>
   new Promise(async (resolve, reject) => {
     try {
       if (fileData) body.imge = fileData?.path;

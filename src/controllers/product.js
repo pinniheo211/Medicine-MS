@@ -26,7 +26,6 @@ export const getProduct = async (req, res) => {
 export const createProduct = async (req, res) => {
   try {
     const fileData = req.file;
-    console.log(fileData);
     const { error } = joi
       .object({
         name,

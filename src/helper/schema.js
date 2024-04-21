@@ -24,3 +24,4 @@ export const image = joi.string().required();
 
 export const pid = joi.string().required();
 export const pids = joi.array().required();
+export const namep = joi.string();
