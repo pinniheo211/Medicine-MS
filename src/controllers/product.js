@@ -8,13 +8,16 @@ import {
   image,
   pid,
   pids,
+  userId,
+  description,
 } from "../helper/schema";
 import joi from "joi";
 const cloudinary = require("cloudinary").v2;
 
 export const getProduct = async (req, res) => {
   try {
-    const response = await services.getProducts(req.query);
+    const { userId, ...query } = req.query;
+    const response = await services.getProducts({ ...query, userId });
     return res.status(200).json(response);
   } catch (error) {
     return internalServerError(res);
@@ -33,6 +36,8 @@ export const createProduct = async (req, res) => {
         available,
         category_code,
         image,
+        description,
+        userId,
       })
       .validate({ ...req.body, image: fileData?.path });
     if (error) {
@@ -40,6 +45,7 @@ export const createProduct = async (req, res) => {
       return badRequest(error.details[0].message, res);
     }
     const response = await services.createNewProduct(req.body, fileData);
+
     return res.status(200).json(response);
   } catch (error) {
     console.log(error);

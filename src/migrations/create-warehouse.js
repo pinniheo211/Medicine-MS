@@ -1,29 +1,18 @@
 "use strict";
+const { sequelize } = require("../models");
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Users", {
+    await queryInterface.createTable("WareHouses", {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
       },
       userId: { type: Sequelize.INTEGER },
-
-      username: { type: Sequelize.STRING },
-
-      email: { type: Sequelize.STRING },
-
-      password: { type: Sequelize.STRING },
-
-      phone: { type: Sequelize.STRING },
-
-      company: { type: Sequelize.STRING },
-
-      role_code: { type: Sequelize.STRING, defaultValue: "R2" },
-
-      avatar: { type: Sequelize.STRING },
+      warehouseName: { type: Sequelize.STRING },
+      status: { type: Sequelize.INTEGER },
       createdAt: {
         allowNull: false,
         type: "TIMESTAMP",
@@ -34,10 +23,9 @@ module.exports = {
         type: "TIMESTAMP",
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
-      //id vaf creat , update kh can sua ben model
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Users");
+    await queryInterface.dropTable("Warehouses");
   },
 };

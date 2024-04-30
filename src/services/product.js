@@ -10,9 +10,9 @@ const cloudinary = require("cloudinary").v2;
 export const getProducts = ({
   page,
   limit,
-  order,
   name,
   available,
+  userId,
   ...query
 }) =>
   new Promise(async (resolve, reject) => {
@@ -22,25 +22,30 @@ export const getProducts = ({
       const fLimit = +limit || +process.env.LIMIT_PRODUCT;
       queries.offset = offset * fLimit;
       queries.limit = fLimit;
-      if (order) {
-        queries.order = [order];
+
+      // Thêm điều kiện where để chỉ lấy sản phẩm của userId cụ thể
+      if (userId) {
+        query.userId = userId;
       }
+
+      // Thêm điều kiện where cho các trường khác nếu được chỉ định
       if (name) {
         query.name = { [Op.substring]: name };
       }
       if (available) {
         query.available = { [Op.between]: available };
       }
+
       const response = await db.Product.findAndCountAll({
-        where: query,
+        where: query, // Sử dụng điều kiện where đã tạo
         ...queries,
         attributes: {
-          excluede: ["category_code"],
+          exclude: ["category_code"],
         },
         include: [
           {
             model: db.Category,
-            attributes: { exclude: ["createAt,updateAt"] },
+            attributes: { exclude: ["createAt", "updateAt"] },
             as: "categoryData",
           },
         ],
@@ -52,17 +57,18 @@ export const getProducts = ({
         productData: response,
       });
     } catch (error) {
+      console.log(error);
       reject(error);
     }
   });
 
 // CREATE
 
-export const createNewProduct = (body, fileData) =>
+export const createNewProduct = async (body, fileData) =>
   new Promise(async (resolve, reject) => {
     try {
       const response = await db.Product.findOrCreate({
-        where: { name: body?.name },
+        where: { userId: body.userId, name: body.name },
         defaults: {
           ...body,
           id: generateId(),
@@ -74,8 +80,11 @@ export const createNewProduct = (body, fileData) =>
         err: response[1] ? 0 : 1,
         mes: response[1] ? "Created Successfully" : "Cannot Create Product",
       });
-      if (fileData && !response[1])
+
+      // Xóa hình ảnh nếu sản phẩm không được tạo thành công
+      if (fileData && !response[1]) {
         cloudinary.uploader.destroy(fileData.filename);
+      }
     } catch (error) {
       reject(error);
       if (fileData) cloudinary.uploader.destroy(fileData.filename);

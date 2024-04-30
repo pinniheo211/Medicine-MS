@@ -15,10 +15,16 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "code",
         as: "categoryData",
       });
+      Product.belongsTo(models.User, {
+        foreignKey: "userId",
+        as: "user",
+      });
     }
   }
   Product.init(
     {
+      userId: DataTypes.INTEGER,
+      productId: DataTypes.INTEGER,
       name: DataTypes.STRING,
       price: DataTypes.FLOAT,
       available: DataTypes.INTEGER,

@@ -10,13 +10,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.STRING,
       },
+      productId: { type: Sequelize.INTEGER },
+      userId: { type: Sequelize.INTEGER },
       name: { type: Sequelize.STRING },
       price: { type: Sequelize.FLOAT, defaultValue: 0 },
       available: { type: Sequelize.INTEGER, defaultValue: 0 },
       image: { type: Sequelize.STRING },
       description: { type: Sequelize.TEXT },
       category_code: { type: Sequelize.STRING },
-
+      filename: { type: Sequelize.STRING },
       createdAt: {
         allowNull: false,
         type: "TIMESTAMP",

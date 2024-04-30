@@ -2,6 +2,7 @@
 import db from "../models";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { generateUserId } from "../helper/function";
 
 const hashPassword = (password) =>
   bcryptjs.hashSync(password, bcryptjs.genSaltSync(10));
@@ -16,6 +17,7 @@ export const register = ({ username, email, phone, password, company }) =>
           email: email,
           phone: phone,
           company: company,
+          userId: generateUserId(),
           password: hashPassword(password),
         },
       });
