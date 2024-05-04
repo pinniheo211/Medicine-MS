@@ -23,7 +23,11 @@ export const category_code = joi.string().uppercase().alphanum().required();
 export const image = joi.string().required();
 export const userId = joi.string().required();
 export const description = joi.string().required();
-
+export const status = joi.number().required();
+export const warehouseName = joi.string().required();
+export const address = joi.string().required();
 export const pid = joi.string().required();
+export const wid = joi.string().required();
+export const wids = joi.array().required();
 export const pids = joi.array().required();
 export const namep = joi.string();

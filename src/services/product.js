@@ -13,6 +13,7 @@ export const getProducts = ({
   name,
   available,
   userId,
+  warehouseId,
   ...query
 }) =>
   new Promise(async (resolve, reject) => {
@@ -23,9 +24,12 @@ export const getProducts = ({
       queries.offset = offset * fLimit;
       queries.limit = fLimit;
 
-      // Thêm điều kiện where để chỉ lấy sản phẩm của userId cụ thể
+      // Thêm điều kiện where để chỉ lấy sản phẩm của userId hoặc warehouseId
       if (userId) {
         query.userId = userId;
+      }
+      if (warehouseId) {
+        query.warehouseId = warehouseId;
       }
 
       // Thêm điều kiện where cho các trường khác nếu được chỉ định

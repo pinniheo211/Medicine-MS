@@ -10,5 +10,8 @@ const router = express.Router();
 //PRIVAE ROUTES
 router.use(verifyToken);
 router.get("/", controllers.getWarehouse);
+router.post("/", controllers.createWarehouse);
+router.put("/", controllers.updateWarehouse);
+router.put("/", controllers.deleteWarehouse);
 
 module.exports = router;

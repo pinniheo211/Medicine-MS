@@ -5,13 +5,15 @@ const { sequelize } = require("../models");
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("WareHouses", {
-      id: {
+      warehouseId: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.STRING,
       },
       userId: { type: Sequelize.INTEGER },
       warehouseName: { type: Sequelize.STRING },
+      phone: { type: Sequelize.STRING },
+      address: { type: Sequelize.STRING },
       status: { type: Sequelize.INTEGER },
       createdAt: {
         allowNull: false,

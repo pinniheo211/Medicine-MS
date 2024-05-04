@@ -14,10 +14,6 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "code",
         as: "roleData",
       });
-      User.hasMany(models.Product, {
-        foreignKey: "userId",
-        as: "products",
-      });
       User.hasMany(models.WareHouse, {
         foreignKey: "userId",
         as: "warehouses",

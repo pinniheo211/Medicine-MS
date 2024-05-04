@@ -11,6 +11,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       productId: { type: Sequelize.INTEGER },
+      warehouseId: { type: Sequelize.STRING },
       userId: { type: Sequelize.INTEGER },
       name: { type: Sequelize.STRING },
       price: { type: Sequelize.FLOAT, defaultValue: 0 },
