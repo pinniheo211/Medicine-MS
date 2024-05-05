@@ -12,6 +12,6 @@ router.use(verifyToken);
 router.get("/", controllers.getWarehouse);
 router.post("/", controllers.createWarehouse);
 router.put("/", controllers.updateWarehouse);
-router.put("/", controllers.deleteWarehouse);
+router.delete("/", controllers.deleteWarehouse);
 
 module.exports = router;
