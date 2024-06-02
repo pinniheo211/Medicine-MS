@@ -8,8 +8,8 @@ import {
   image,
   pid,
   pids,
-  userId,
   description,
+  userId,
 } from "../helper/schema";
 import joi from "joi";
 const cloudinary = require("cloudinary").v2;
@@ -37,25 +37,13 @@ export const createProduct = async (req, res) => {
         image,
         description,
         userId,
-        warehouseId,
       })
       .validate({ ...req.body, image: fileData?.path });
     if (error) {
       if (fileData) cloudinary.uploader.destroy(fileData.filename);
       return badRequest(error.details[0].message, res);
     }
-
-    // Trích xuất userId hoặc warehouseId từ req.body
-    const { userId, warehouseId, ...productData } = req.body;
-
-    // Chọn cơ sở dữ liệu dựa trên userId hoặc warehouseId
-    const ownerKey = userId ? "userId" : "warehouseId";
-    const ownerValue = userId || warehouseId;
-
-    // Thêm ownerId vào dữ liệu sản phẩm
-    productData[ownerKey] = ownerValue;
-
-    const response = await services.createNewProduct(productData, fileData);
+    const response = await services.createNewProduct(req.body, fileData);
     return res.status(200).json(response);
   } catch (error) {
     console.log(error);

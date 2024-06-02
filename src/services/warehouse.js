@@ -1,4 +1,3 @@
-//viet api o day
 import db from "../models";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
